@@ -1,4 +1,0 @@
-name: Sophie
-version: '${version}'
-main: dev.jxnnik.sophie.Sophie
-api-version: 1.19
