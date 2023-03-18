@@ -7,8 +7,10 @@ import com.hazelcast.client.config.SocketOptions;
 import com.hazelcast.collection.IList;
 import com.hazelcast.collection.IQueue;
 import com.hazelcast.collection.ISet;
+import com.hazelcast.collection.ItemListener;
 import com.hazelcast.config.SerializationConfig;
 import com.hazelcast.config.SerializerConfig;
+import com.hazelcast.core.EntryListener;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import com.hazelcast.map.listener.MapListener;
@@ -17,6 +19,7 @@ import com.hazelcast.nio.serialization.Serializer;
 import com.hazelcast.replicatedmap.ReplicatedMap;
 import com.hazelcast.ringbuffer.Ringbuffer;
 import com.hazelcast.topic.ITopic;
+import com.hazelcast.topic.MessageListener;
 import dev.jxnnik.hazelcast.api.cache.ICacheProvider;
 import dev.jxnnik.hazelcast.api.serializer.ISerializerProvider;
 import lombok.Getter;
@@ -97,6 +100,41 @@ public abstract class HazelcastAPI {
             @Override
             public void addListenerToMap(String map, MapListener listener, boolean includeValue) {
                 getMap(map).addEntryListener(listener, includeValue);
+            }
+
+            @Override
+            public void addListenerToMultiMap(String multiMap, EntryListener listener, boolean includeValue) {
+                getMultiMap(multiMap).addEntryListener(listener, includeValue);
+            }
+
+            @Override
+            public void addListenerToReplicated(String replicatedMap, EntryListener listener, boolean includeValue) {
+                getReplicatedMap(replicatedMap).addEntryListener(listener, includeValue);
+            }
+
+            @Override
+            public void addListenerToTopic(String topic, MessageListener messageListener) {
+                getTopic(topic).addMessageListener(messageListener);
+            }
+
+            @Override
+            public void addListenerToReliableTopic(String topic, MessageListener messageListener) {
+                getReliableTopic(topic).addMessageListener(messageListener);
+            }
+
+            @Override
+            public void addListenerToSet(String set, ItemListener listener, boolean includeValue) {
+                getSet(set).addItemListener(listener, includeValue);
+            }
+
+            @Override
+            public void addListenerToList(String list, ItemListener listener, boolean includeValue) {
+                getList(list).addItemListener(listener, includeValue);
+            }
+
+            @Override
+            public void addListenerToQueue(String queue, ItemListener listener, boolean includeValue) {
+                getQueue(queue).addItemListener(listener, includeValue);
             }
         };
         this.serializerProvider = new ISerializerProvider() {
