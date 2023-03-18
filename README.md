@@ -11,6 +11,11 @@ Example:
 new HazelcastConnection("test-system", "dev", 64, true, "127.0.0.1:5701");
 ```
 
+## Getting HazelcastInstance
+```java
+HazelcastAPI.getHazelcastAPI().getHazelcastInstance();
+```
+
 ## Adding a SerializerConfig
 ```java
 HazelcastAPI.getHazelcastAPI().getSerializerProvider().addSerializerConfig(Class class, Serializer implementation);
