@@ -52,89 +52,45 @@ public abstract class HazelcastAPI {
         this.hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
 
         this.cacheProvider = new ICacheProvider() {
-            @Override
-            public <E> IQueue<E> getQueue(String name) {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getQueue(name);
-            }
-
-            @Override
-            public <E> ITopic<E> getTopic(String name) {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getTopic(name);
-            }
-
-            @Override
-            public <E> ISet<E> getSet(String name) {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getSet(name);
-            }
-
-            @Override
-            public <E> IList<E> getList(String name) {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getList(name);
-            }
-
-            @Override
-            public <K, V> IMap<K, V> getMap(String name) {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getMap(name);
-            }
-
-            @Override
-            public <K, V> ReplicatedMap<K, V> getReplicatedMap(String name) {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getReplicatedMap(name);
-            }
-
-            @Override
-            public <K, V> MultiMap<K, V> getMultiMap(String name) {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getMultiMap(name);
-            }
-
-            @Override
-            public <E> Ringbuffer<E> getRingbuffer(String name) {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getRingbuffer(name);
-            }
-
-            @Override
-            public <E> ITopic<E> getReliableTopic(String name) {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getReliableTopic(name);
-            }
 
             @Override
             public void addListenerToMap(String map, MapListener listener, boolean includeValue) {
-                getMap(map).addEntryListener(listener, includeValue);
+                hazelcastInstance.getMap(map).addEntryListener(listener, includeValue);
             }
 
             @Override
             public void addListenerToMultiMap(String multiMap, EntryListener listener, boolean includeValue) {
-                getMultiMap(multiMap).addEntryListener(listener, includeValue);
+                hazelcastInstance.getMultiMap(multiMap).addEntryListener(listener, includeValue);
             }
 
             @Override
             public void addListenerToReplicated(String replicatedMap, EntryListener listener, boolean includeValue) {
-                getReplicatedMap(replicatedMap).addEntryListener(listener, includeValue);
+                hazelcastInstance.getReplicatedMap(replicatedMap).addEntryListener(listener, includeValue);
             }
 
             @Override
             public void addListenerToTopic(String topic, MessageListener messageListener) {
-                getTopic(topic).addMessageListener(messageListener);
+                hazelcastInstance.getTopic(topic).addMessageListener(messageListener);
             }
 
             @Override
             public void addListenerToReliableTopic(String topic, MessageListener messageListener) {
-                getReliableTopic(topic).addMessageListener(messageListener);
+                hazelcastInstance.getReliableTopic(topic).addMessageListener(messageListener);
             }
 
             @Override
             public void addListenerToSet(String set, ItemListener listener, boolean includeValue) {
-                getSet(set).addItemListener(listener, includeValue);
+                hazelcastInstance.getSet(set).addItemListener(listener, includeValue);
             }
 
             @Override
             public void addListenerToList(String list, ItemListener listener, boolean includeValue) {
-                getList(list).addItemListener(listener, includeValue);
+                hazelcastInstance.getList(list).addItemListener(listener, includeValue);
             }
 
             @Override
             public void addListenerToQueue(String queue, ItemListener listener, boolean includeValue) {
-                getQueue(queue).addItemListener(listener, includeValue);
+                hazelcastInstance.getQueue(queue).addItemListener(listener, includeValue);
             }
         };
         this.serializerProvider = new ISerializerProvider() {
