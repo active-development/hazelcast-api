@@ -14,7 +14,7 @@ dependencies {
     implementation("com.hazelcast:hazelcast:5.2.2")
 
     compileOnly 'org.projectlombok:lombok:1.18.26'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
 }
 
 def targetJavaVersion = 17
