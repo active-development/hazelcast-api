@@ -2,36 +2,33 @@
 A small api to use hazelcast easier.
 
 ## Create connection to hazelcast cluster
-```java
-new HazelcastConnection(String instanceName, String clusterName, int bufferSize, boolean tcpNoDelay, String... addresses);
+[Wiki](https://github.com/active-development/hazelcast-api/wiki) - [Repository](https://repo.jxnnik.dev/#/releases/)
+
+## Add to your project
+
+#### Gradle
+```
+maven {
+    url = "https://repo.jxnnik.dev/releases"
+}
 ```
 
-Example:
-```java
-new HazelcastConnection("test-system", "dev", 64, true, "127.0.0.1:5701");
+```
+implementation "dev.jxnnik.hazelcast:hazelcast-api:1.0"
 ```
 
-## Getting HazelcastInstance
-```java
-HazelcastAPI.getHazelcastAPI().getHazelcastInstance();
+#### Maven
 ```
-
-## Adding a SerializerConfig
-```java
-HazelcastAPI.getHazelcastAPI().getSerializerProvider().addSerializerConfig(Class class, Serializer implementation);
+<repository>
+  <id>jxnnik-development -repository-releases</id>
+  <name>jxnnik.dev development repository</name>
+  <url>https://repo.jxnnik.dev/releases</url>
+</repository>
 ```
-
-Example:
-```java
-HazelcastAPI.getHazelcastAPI().getSerializerProvider().addSerializerConfig(Task.class, new TaskSerializer());
 ```
-
-## Register listener to map
-```java
-HazelcastAPI.getHazelcastAPI().getCacheProvider().getCacheProvider().addListenerToMap(String map, MapListener listener, boolean includeValue);
-```
-
-Example:
-```java
-HazelcastAPI.getHazelcastAPI().getCacheProvider().getCacheProvider().addListenerToMap("tasks", new TaskListener(), true);
+<dependency>
+  <groupId>dev.jxnnik.hazelcast</groupId>
+  <artifactId>hazelcast-api</artifactId>
+  <version>1.0</version>
+</dependency>
 ```
