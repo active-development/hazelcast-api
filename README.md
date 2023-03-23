@@ -20,8 +20,8 @@ implementation "dev.jxnnik.hazelcast:hazelcast-api:1.0"
 #### Maven
 ```
 <repository>
-  <id>jxnnik-development -repository-releases</id>
-  <name>jxnnik.dev development repository</name>
+  <id>jxnnik.dev-repository</id>
+  <name>jxnnik.dev-repository</name>
   <url>https://repo.jxnnik.dev/releases</url>
 </repository>
 ```
