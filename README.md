@@ -14,7 +14,7 @@ maven {
 ```
 
 ```
-implementation "dev.jxnnik.hazelcast:hazelcast-api:1.0"
+implementation "dev.jxnnik.hazelcast:hazelcast-api:1.1"
 ```
 
 #### Maven
@@ -29,6 +29,6 @@ implementation "dev.jxnnik.hazelcast:hazelcast-api:1.0"
 <dependency>
   <groupId>dev.jxnnik.hazelcast</groupId>
   <artifactId>hazelcast-api</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 </dependency>
 ```
