@@ -25,7 +25,7 @@ import dev.jxnnik.hazelcast.api.serializer.ISerializerProvider;
 import lombok.Getter;
 
 @Getter
-public abstract class HazelcastAPI {
+public class HazelcastAPI {
 
     @Getter
     private static HazelcastAPI hazelcastAPI;
@@ -33,168 +33,10 @@ public abstract class HazelcastAPI {
     private final ICacheProvider cacheProvider;
     private final ISerializerProvider serializerProvider;
 
-    public HazelcastAPI(String instanceName, String clusterName, int bufferSize, boolean tcpNoDelay, String... addresses) {
+    public HazelcastAPI(ClientConfig clientConfig, ClientNetworkConfig networkConfig, SocketOptions socketOptions) {
         hazelcastAPI = this;
 
-        ClientConfig clientConfig = new ClientConfig();
-        ClientNetworkConfig networkConfig = new ClientNetworkConfig();
-        SocketOptions socketOptions = new SocketOptions();
-
-        networkConfig.addAddress(addresses);
-
-        socketOptions.setBufferSize(bufferSize);
-        socketOptions.setTcpNoDelay(tcpNoDelay);
-
         clientConfig.setNetworkConfig(networkConfig);
-        clientConfig.setInstanceName(instanceName);
-        clientConfig.setClusterName(clusterName);
-        clientConfig.getNetworkConfig().setSocketOptions(socketOptions);
-
-        this.hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
-
-        this.cacheProvider = new ICacheProvider() {
-
-            @Override
-            public void addListenerToMap(String map, MapListener listener, boolean includeValue) {
-                hazelcastInstance.getMap(map).addEntryListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToMultiMap(String multiMap, EntryListener listener, boolean includeValue) {
-                hazelcastInstance.getMultiMap(multiMap).addEntryListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToReplicated(String replicatedMap, EntryListener listener, boolean includeValue) {
-                hazelcastInstance.getReplicatedMap(replicatedMap).addEntryListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToTopic(String topic, MessageListener messageListener) {
-                hazelcastInstance.getTopic(topic).addMessageListener(messageListener);
-            }
-
-            @Override
-            public void addListenerToReliableTopic(String topic, MessageListener messageListener) {
-                hazelcastInstance.getReliableTopic(topic).addMessageListener(messageListener);
-            }
-
-            @Override
-            public void addListenerToSet(String set, ItemListener listener, boolean includeValue) {
-                hazelcastInstance.getSet(set).addItemListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToList(String list, ItemListener listener, boolean includeValue) {
-                hazelcastInstance.getList(list).addItemListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToQueue(String queue, ItemListener listener, boolean includeValue) {
-                hazelcastInstance.getQueue(queue).addItemListener(listener, includeValue);
-            }
-        };
-        this.serializerProvider = new ISerializerProvider() {
-            @Override
-            public SerializationConfig getSerializationConfig() {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getConfig().getSerializationConfig();
-            }
-
-            @Override
-            public void addSerializerConfig(Class typeClass, Serializer implementation) {
-                SerializerConfig serializerConfig = new SerializerConfig();
-                serializerConfig.setTypeClass(typeClass).setImplementation(implementation);
-
-                getSerializationConfig().addSerializerConfig(serializerConfig);
-            }
-        };
-    }
-
-    public HazelcastAPI(String instanceName, String clusterName, String... addresses) {
-        hazelcastAPI = this;
-
-        ClientConfig clientConfig = new ClientConfig();
-        ClientNetworkConfig networkConfig = new ClientNetworkConfig();
-        SocketOptions socketOptions = new SocketOptions();
-
-        networkConfig.addAddress(addresses);
-
-        clientConfig.setNetworkConfig(networkConfig);
-        clientConfig.setInstanceName(instanceName);
-        clientConfig.setClusterName(clusterName);
-        clientConfig.getNetworkConfig().setSocketOptions(socketOptions);
-
-        this.hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
-
-        this.cacheProvider = new ICacheProvider() {
-
-            @Override
-            public void addListenerToMap(String map, MapListener listener, boolean includeValue) {
-                hazelcastInstance.getMap(map).addEntryListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToMultiMap(String multiMap, EntryListener listener, boolean includeValue) {
-                hazelcastInstance.getMultiMap(multiMap).addEntryListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToReplicated(String replicatedMap, EntryListener listener, boolean includeValue) {
-                hazelcastInstance.getReplicatedMap(replicatedMap).addEntryListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToTopic(String topic, MessageListener messageListener) {
-                hazelcastInstance.getTopic(topic).addMessageListener(messageListener);
-            }
-
-            @Override
-            public void addListenerToReliableTopic(String topic, MessageListener messageListener) {
-                hazelcastInstance.getReliableTopic(topic).addMessageListener(messageListener);
-            }
-
-            @Override
-            public void addListenerToSet(String set, ItemListener listener, boolean includeValue) {
-                hazelcastInstance.getSet(set).addItemListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToList(String list, ItemListener listener, boolean includeValue) {
-                hazelcastInstance.getList(list).addItemListener(listener, includeValue);
-            }
-
-            @Override
-            public void addListenerToQueue(String queue, ItemListener listener, boolean includeValue) {
-                hazelcastInstance.getQueue(queue).addItemListener(listener, includeValue);
-            }
-        };
-        this.serializerProvider = new ISerializerProvider() {
-            @Override
-            public SerializationConfig getSerializationConfig() {
-                return HazelcastAPI.getHazelcastAPI().getHazelcastInstance().getConfig().getSerializationConfig();
-            }
-
-            @Override
-            public void addSerializerConfig(Class typeClass, Serializer implementation) {
-                SerializerConfig serializerConfig = new SerializerConfig();
-                serializerConfig.setTypeClass(typeClass).setImplementation(implementation);
-
-                getSerializationConfig().addSerializerConfig(serializerConfig);
-            }
-        };
-    }
-
-    public HazelcastAPI(String instanceName, String clusterName, SocketOptions socketOptions, String... addresses) {
-        hazelcastAPI = this;
-
-        ClientConfig clientConfig = new ClientConfig();
-        ClientNetworkConfig networkConfig = new ClientNetworkConfig();
-
-        networkConfig.addAddress(addresses);
-
-        clientConfig.setNetworkConfig(networkConfig);
-        clientConfig.setInstanceName(instanceName);
-        clientConfig.setClusterName(clusterName);
         clientConfig.getNetworkConfig().setSocketOptions(socketOptions);
 
         this.hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
