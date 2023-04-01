@@ -1,8 +1,8 @@
 # hazelcast-api
 A small api to use hazelcast easier.
 
-## Create connection to hazelcast cluster
-[Wiki](https://github.com/active-development/hazelcast-api/wiki) - [Repository](https://repo.jxnnik.dev/#/releases/)
+## important links
+[Wiki](https://github.com/active-development/hazelcast-api/wiki) - [Repository](https://repo.jxnnik.dev/#/releases/) - [Discord Support](https://discord.gg/nUcRB6HDJr)
 
 ## Add to your project
 
